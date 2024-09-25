@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:project/provider/transaction_provider.dart';
 import 'package:project/screens/from_screen.dart';
@@ -26,7 +25,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyHomePage(title: 'แอพบัญชี'),
+        home: const MyHomePage(title: 'Anime 2024'),
       ),
     );
   }
