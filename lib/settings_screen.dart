@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsScreen extends StatefulWidget {
+  final Function(bool) toggleTheme;
+
+  const SettingsScreen({super.key, required this.toggleTheme});
+
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _darkTheme = false;
+  bool _isDarkTheme = false;
 
   @override
   void initState() {
@@ -18,13 +22,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
   _loadSettings() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      _darkTheme = prefs.getBool('darkTheme') ?? false;
+      _isDarkTheme = prefs.getBool('isDarkTheme') ?? false;
     });
   }
 
-  _saveSettings() async {
+  _saveSettings(bool value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('darkTheme', _darkTheme);
+    prefs.setBool('isDarkTheme', value);
+    widget.toggleTheme(value); 
   }
 
   @override
@@ -36,13 +41,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: <Widget>[
           SwitchListTile(
-            title: const Text('Enable Dark Theme'),
-            value: _darkTheme,
+            title: const Text('Dark Theme'),
+            value: _isDarkTheme,
             onChanged: (bool value) {
               setState(() {
-                _darkTheme = value;
+                _isDarkTheme = value;
               });
-              _saveSettings(); 
+              _saveSettings(value); 
+            },
+          ),
+          ListTile(
+            title: const Text('About This App'),
+            trailing: const Icon(Icons.arrow_forward_ios),
+            onTap: () {
+              
             },
           ),
         ],

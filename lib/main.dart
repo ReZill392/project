@@ -3,6 +3,8 @@ import 'package:project/provider/transaction_provider.dart';
 import 'package:project/screens/from_screen.dart';
 import 'package:provider/provider.dart';
 import 'settings_screen.dart';
+import 'package:project/screens/theme_data.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -46,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _pages = [
     TransactionListPage(), 
     AllAnime(),            
-    SettingsScreen(), 
+    SettingsScreen(toggleTheme: (bool ) {  },), 
   ];
 
   void _onItemTapped(int index) {
@@ -113,7 +115,7 @@ class TransactionListPage extends StatelessWidget {
                 leading: CircleAvatar(
                   radius: 30,
                   child: FittedBox(
-                    child: Text('${provider.transactions[index].amount}'),
+                    child: Text('${provider.transactions[index].score}'),
                   ),
                 ),
                 trailing: IconButton(

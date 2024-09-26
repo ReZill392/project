@@ -7,70 +7,138 @@ class FormScreen extends StatelessWidget {
   FormScreen({super.key});
 
   final formKey = GlobalKey<FormState>();
+  
+  // Separate controllers for each field
   final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final typeController = TextEditingController();
+  final ariedController = TextEditingController();
+  final genresController = TextEditingController();
+  final themeController = TextEditingController();
+  final scoreController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('แบบฟอร์มข้อมูล'),
-        ),
-        body: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'ชื่อรายการ',
-                  ),
-                  autofocus: true,
-                  controller: titleController,
-                  validator: (String? str) {
-                    if (str!.isEmpty) {
-                      return 'กรุณากรอกข้อมูล';
-                    }
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: 'จำนวนเงิน',
-                  ),
-                  keyboardType: TextInputType.number,
-                  controller: amountController,
-                  validator: (String? input) {
-                    try {
-                      double amount = double.parse(input!);
-                      if (amount < 0) {
-                        return 'กรุณากรอกข้อมูลมากกว่า 0';
-                      }
-                    } catch (e) {
-                      return 'กรุณากรอกข้อมูลเป็นตัวเลข';
-                    }
-                  },
-                ),
-                TextButton(
-                    child: const Text('บันทึก'),
-                    onPressed: () {
-                          if (formKey.currentState!.validate())
-                            {
-                              // create transaction data object
-                              var statement = Transaction(
-                                  title: titleController.text,
-                                  amount: double.parse(amountController.text),
-                                  date: DateTime.now()
-                                  );
-                            
-                              // add transaction data object to provider
-                              var provider = Provider.of<TransactionProvider>(context, listen: false);
-                              
-                              provider.addTransaction(statement);
+      appBar: AppBar(
+        title: const Text('แบบฟอร์มข้อมูล'),
+      ),
+      body: Form(
+        key: formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Title',
+              ),
+              autofocus: true,
+              controller: titleController,
+              validator: (String? str) {
+                if (str!.isEmpty) {
+                  return 'กรุณากรอกข้อมูล';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Type',
+              ),
+              autofocus: true,
+              controller: typeController,
+              validator: (String? str) {
+                if (str!.isEmpty) {
+                  return 'กรุณากรอกข้อมูล';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Aried',
+              ),
+              autofocus: true,
+              controller: ariedController,
+              validator: (String? str) {
+                if (str!.isEmpty) {
+                  return 'กรุณากรอกข้อมูล';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Genres',
+              ),
+              autofocus: true,
+              controller: genresController,
+              validator: (String? str) {
+                if (str!.isEmpty) {
+                  return 'กรุณากรอกข้อมูล';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Theme',
+              ),
+              autofocus: true,
+              controller: themeController,
+              validator: (String? str) {
+                if (str!.isEmpty) {
+                  return 'กรุณากรอกข้อมูล';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'Your Score',
+              ),
+              keyboardType: TextInputType.number,
+              controller: scoreController,
+              validator: (String? input) {
+                try {
+                  double score = double.parse(input!);
+                  if (score < 0) {
+                    return 'กรุณากรอกข้อมูลมากกว่า 0';
+                  }
+                  if (score > 10) {
+                    return 'กรุณากรอกข้อมูลไม่เกิน 10';
+                  }
+                } catch (e) {
+                  return 'กรุณากรอกข้อมูลเป็นตัวเลข';
+                }
+                return null;
+              },
+            ),
+            TextButton(
+              child: const Text('บันทึก'),
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+                  // Create a transaction data object
+                  var statement = Transaction(
+                    title: titleController.text,
+                    type: typeController.text,
+                    aried: ariedController.text,
+                    genres: genresController.text,
+                    theme: themeController.text,
+                    score: double.parse(scoreController.text),
+                    date: DateTime.now(),
+                  );
 
-                              Navigator.pop(context);
-                            }
-                        })
-              ],
-            )));
+                  // Add transaction data object to provider
+                  var provider = Provider.of<TransactionProvider>(context, listen: false);
+                  provider.addTransaction(statement);
+
+                  // Pop the form screen after submission
+                  Navigator.pop(context);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
