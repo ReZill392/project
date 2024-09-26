@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project/provider/transaction_provider.dart';
 import 'package:project/screens/from_screen.dart';
 import 'package:provider/provider.dart';
-
+import 'settings_screen.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -10,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -41,60 +40,100 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0; 
 
-  void _incrementCounter() {
+  
+  final List<Widget> _pages = [
+    TransactionListPage(), 
+    AllAnime(),            
+    SettingsScreen(), 
+  ];
+
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Text(widget.title),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return FormScreen();
-                }));
-              },
-            ),
-          ],
-        ),
-        body: Consumer(
-          builder: (context, TransactionProvider provider, Widget? child) {
-            return ListView.builder(
-              itemCount: provider.transactions.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  elevation: 5,
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
-                  child: ListTile(
-                    title: Text(provider.transactions[index].title),
-                    subtitle: Text(provider.transactions[index].date.toString()),
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: FittedBox(
-                        child: Text('${provider.transactions[index].amount}'),
-                      ),
-                    ),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {},
-                    ),
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        title: Text(widget.title),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return FormScreen();
+              }));
+            },
+          ),
+        ],
+      ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Your Library',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'All Anime',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped, 
+      ),
+    );
+  }
+}
+
+class TransactionListPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<TransactionProvider>(
+      builder: (context, provider, Widget? child) {
+        return ListView.builder(
+          itemCount: provider.transactions.length,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 5,
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              child: ListTile(
+                title: Text(provider.transactions[index].title),
+                subtitle: Text(provider.transactions[index].date.toString()),
+                leading: CircleAvatar(
+                  radius: 30,
+                  child: FittedBox(
+                    child: Text('${provider.transactions[index].amount}'),
                   ),
-                );
-              },
+                ),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () {},
+                ),
+              ),
             );
           },
-        )
-        // This trailing comma makes auto-formatting nicer for build methods.
         );
+      },
+    );
+  }
+}
+
+class AllAnime extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+
+    );
   }
 }
