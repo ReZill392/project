@@ -108,7 +108,7 @@ class TransactionListPage extends StatelessWidget {
         return ListView.builder(
           itemCount: provider.transactions.length,
           itemBuilder: (context, index) {
-            String formattedDate = DateFormat('dd/MM/yyyy').format(provider.transactions[index].date);
+            String formattedDate = DateFormat('dd/MM/yyyy H:mm:ss').format(provider.transactions[index].date);
 
             return Card(
               elevation: 5,
