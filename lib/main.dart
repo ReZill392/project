@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:project/provider/remove_action.dart';
 import 'package:project/provider/transaction_provider.dart';
 import 'package:project/screens/from_screen.dart';
 import 'package:provider/provider.dart';
 import 'settings_screen.dart';
-import 'package:project/screens/theme_data.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -106,12 +108,14 @@ class TransactionListPage extends StatelessWidget {
         return ListView.builder(
           itemCount: provider.transactions.length,
           itemBuilder: (context, index) {
+            String formattedDate = DateFormat('dd/MM/yyyy').format(provider.transactions[index].date);
+
             return Card(
               elevation: 5,
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: ListTile(
                 title: Text(provider.transactions[index].title),
-                subtitle: Text(provider.transactions[index].date.toString()),
+                subtitle: Text(formattedDate),
                 leading: CircleAvatar(
                   radius: 30,
                   child: FittedBox(
@@ -120,7 +124,9 @@ class TransactionListPage extends StatelessWidget {
                 ),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
-                  onPressed: () {},
+                  onPressed: () {
+                    removeTransaction(context, index);
+                  },
                 ),
               ),
             );
