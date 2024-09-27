@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/models/transaction.dart';
+import 'package:project/models/transactions.dart';
 import 'package:project/provider/transaction_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -11,7 +11,6 @@ class FormScreen extends StatelessWidget {
   // Separate controllers for each field
   final titleController = TextEditingController();
   final typeController = TextEditingController();
-  final ariedController = TextEditingController();
   final genresController = TextEditingController();
   final themeController = TextEditingController();
   final scoreController = TextEditingController();
@@ -45,19 +44,6 @@ class FormScreen extends StatelessWidget {
               ),
               autofocus: true,
               controller: typeController,
-              validator: (String? str) {
-                if (str!.isEmpty) {
-                  return 'กรุณากรอกข้อมูล';
-                }
-                return null;
-              },
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                labelText: 'Aried',
-              ),
-              autofocus: true,
-              controller: ariedController,
               validator: (String? str) {
                 if (str!.isEmpty) {
                   return 'กรุณากรอกข้อมูล';
@@ -117,10 +103,9 @@ class FormScreen extends StatelessWidget {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   // Create a transaction data object
-                  var statement = Transaction(
+                  var statement = Transactions(
                     title: titleController.text,
                     type: typeController.text,
-                    aried: ariedController.text,
                     genres: genresController.text,
                     theme: themeController.text,
                     score: double.parse(scoreController.text),

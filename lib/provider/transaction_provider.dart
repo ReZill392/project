@@ -1,17 +1,20 @@
 import 'package:flutter/foundation.dart';
-import 'package:project/models/transaction.dart';
+import 'package:project/database/transaction_db.dart';
+import 'package:project/models/transactions.dart';
 
 class TransactionProvider with ChangeNotifier {
-  List<Transaction> transactions = [
+  List<Transactions> transactions = [
     
   ];
 
-  List<Transaction> getTransaction() {
+  List<Transactions> getTransaction() {
     return transactions;
   }
 
-  void addTransaction(Transaction transaction) {
-    transactions.add(transaction);
+  Future<void> addTransaction(Transactions transaction) async {
+    var db = await TransactionDB(dbName: 'transactions.db');
+    var keyID = await db.insertDatabase(transaction);
+    this.transactions = await db.loadAllData();
     notifyListeners();
   }
 
