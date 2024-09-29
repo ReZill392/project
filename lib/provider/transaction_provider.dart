@@ -11,6 +11,12 @@ class TransactionProvider with ChangeNotifier {
     return transactions;
   }
 
+  void initData() async {
+    var db = TransactionDB(dbName: "transactions.db");
+    transactions = await db.loadAllData();
+    notifyListeners();
+  }
+
   Future<void> addTransaction(Transactions transaction) async {
     var db = await TransactionDB(dbName: 'transactions.db');
     var keyID = await db.insertDatabase(transaction);
@@ -18,8 +24,10 @@ class TransactionProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTransaction(int index) {
-    transactions.removeAt(index);
-    notifyListeners(); 
+  Future<void> deleteTransaction(int index) async {
+    var db = await TransactionDB(dbName: 'transactions.db');
+    await db.deleteTransaction(index);
+    transactions = await db.loadAllData(); 
+    notifyListeners();
   }
 }

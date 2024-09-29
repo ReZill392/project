@@ -5,7 +5,6 @@ import 'package:project/provider/transaction_provider.dart';
 import 'package:project/screens/from_screen.dart';
 import 'package:provider/provider.dart';
 import 'settings_screen.dart';
-import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,6 +43,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState(){
+    super.initState();
+    Provider.of<TransactionProvider>(context,listen: false).initData();
+  }
+
   int _selectedIndex = 0; 
 
   

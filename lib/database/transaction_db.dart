@@ -5,7 +5,6 @@ import 'package:sembast/sembast.dart';
 import 'package:sembast/sembast_io.dart';
 import 'package:project/models/transactions.dart';
 
-
 class TransactionDB{
   String dbName;
 
@@ -52,5 +51,12 @@ class TransactionDB{
       ));
     }
     return transactions;
+  }
+
+   Future<void> deleteTransaction(int id) async {
+    var db = await openDatabase();
+    var store = intMapStoreFactory.store('expense');
+    await store.record(id).delete(db);
+    db.close();
   }
 }
