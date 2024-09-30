@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:project/models/transactions.dart';
 import 'package:project/provider/remove_action.dart';
 import 'package:project/provider/transaction_provider.dart';
+import 'package:project/screens/datail_screen.dart';
 import 'package:project/screens/from_screen.dart';
 import 'package:provider/provider.dart';
 import 'settings_screen.dart';
@@ -129,6 +130,16 @@ class TransactionListPage extends StatelessWidget {
                     child: Text('${transaction.score}'),
                   ),
                 ),
+                 onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TransactionDetailPage(
+                        transaction: transaction, // Pass the transaction data
+                      ),
+                    ),
+                  );
+                },
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
