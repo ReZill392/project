@@ -135,7 +135,7 @@ class TransactionListPage extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => TransactionDetailPage(
-                        transaction: transaction, // Pass the transaction data
+                        transaction: transaction,
                       ),
                     ),
                   );
