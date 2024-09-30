@@ -53,6 +53,23 @@ class TransactionDB{
     return transactions;
   }
 
+  Future<void> updatedTransaction(Transactions transaction) async {
+    var db = await openDatabase();
+    var store = intMapStoreFactory.store('expense');
+
+    final finder = Finder(filter: Filter.byKey(transaction.id));
+    await store.update(db, {
+      'title': transaction.title,
+      'type': transaction.type,
+      'genres': transaction.genres,
+      'theme': transaction.theme,
+      'score': transaction.score,
+      'date': transaction.date.toIso8601String(),
+    }, finder: finder);
+
+    db.close();
+  }
+
    Future<void> deleteTransaction(int id) async {
     var db = await openDatabase();
     var store = intMapStoreFactory.store('expense');

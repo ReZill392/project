@@ -8,7 +8,6 @@ class FormScreen extends StatelessWidget {
 
   final formKey = GlobalKey<FormState>();
   
-  // Separate controllers for each field
   final titleController = TextEditingController();
   final typeController = TextEditingController();
   final genresController = TextEditingController();

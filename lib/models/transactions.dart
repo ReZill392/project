@@ -1,14 +1,14 @@
 class Transactions {
-  // final String id;
-  final String title;
-  final String type;
-  final String genres;
-  final String theme;
-  final double score;
-  final DateTime date;
+  int? id; 
+  String title;
+  String type;
+  String genres;
+  String theme;
+  double score;
+  DateTime date;
 
   Transactions({
-    // required this.id,
+    this.id, 
     required this.title,
     required this.type,
     required this.genres,

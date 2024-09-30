@@ -30,4 +30,13 @@ class TransactionProvider with ChangeNotifier {
     transactions = await db.loadAllData(); 
     notifyListeners();
   }
+
+  Future<void> updateTransaction(int index, Transactions updatedTransaction) async {
+    if (index >= 0 && index < transactions.length) {
+      var db = TransactionDB(dbName: 'transactions.db');
+      transactions[index] = updatedTransaction;
+      await db.updatedTransaction(updatedTransaction);
+      notifyListeners();
+    }
+  }
 }
