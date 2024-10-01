@@ -24,19 +24,25 @@ class TransactionProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteTransaction(int index) async {
-    var db = await TransactionDB(dbName: 'transactions.db');
-    await db.deleteTransaction(index);
-    transactions = await db.loadAllData(); 
+  void deleteTransaction(int index) async{
+    var db = TransactionDB(dbName: 'transactions.db');
+  
+
+    var transactionToDelete = transactions[index];
+
+ 
+    if (transactionToDelete.keyID != null) {
+      await db.deleteDatabase(transactionToDelete.keyID!);
+    }
+
+    transactions.removeAt(index);
     notifyListeners();
   }
 
   Future<void> updateTransaction(int index, Transactions updatedTransaction) async {
-    if (index >= 0 && index < transactions.length) {
       var db = TransactionDB(dbName: 'transactions.db');
       transactions[index] = updatedTransaction;
       await db.updatedTransaction(updatedTransaction);
       notifyListeners();
-    }
   }
 }

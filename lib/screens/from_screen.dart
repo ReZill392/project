@@ -115,8 +115,8 @@ class FormScreen extends StatelessWidget {
               child: const Text('บันทึก'),
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  // Create a transaction data object
                   var statement = Transactions(
+                    keyID: null,
                     title: titleController.text,
                     type: typeController.text,
                     genres: genresController.text,
@@ -126,11 +126,9 @@ class FormScreen extends StatelessWidget {
                     review: reviewController.text,
                   );
 
-                  // Add transaction data object to provider
                   var provider = Provider.of<TransactionProvider>(context, listen: false);
                   provider.addTransaction(statement);
 
-                  // Pop the form screen after submission
                   Navigator.pop(context);
                 }
               },

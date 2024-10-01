@@ -39,10 +39,11 @@ class TransactionDB{
   Future<List<Transactions>> loadAllData()async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store('expense');
-    var snapshot = await store.find(db, finder: Finder(sortOrders: [SortOrder(Field.key, false)]));
+    var snapshot = await store.find(db);
     List<Transactions> transactions = [];
     for (var record in snapshot) {
       transactions.add(Transactions(
+        keyID: record.key,
         title: record['title'].toString(),
         type: record['type'].toString(),
         genres: record['genres'].toString(),
@@ -58,25 +59,18 @@ class TransactionDB{
   Future<void> updatedTransaction(Transactions transaction) async {
     var db = await openDatabase();
     var store = intMapStoreFactory.store('expense');
-
-    final finder = Finder(filter: Filter.byKey(transaction.id));
-    await store.update(db, {
-      'title': transaction.title,
-      'type': transaction.type,
-      'genres': transaction.genres,
-      'theme': transaction.theme,
-      'score': transaction.score,
-      'date': transaction.date.toIso8601String(),
-      'review': transaction.review,
-    }, finder: finder);
+    final finder = Finder(filter: Filter.byKey(transaction));
+    await store.update(db, transaction.toMap(), finder: finder);
 
     db.close();
   }
 
-   Future<void> deleteTransaction(int id) async {
-    var db = await openDatabase();
+  Future<void> deleteDatabase(int id) async {
+    var db = await this.openDatabase();
     var store = intMapStoreFactory.store('expense');
+
     await store.record(id).delete(db);
-    db.close();
+  
+    await db.close();
   }
 }

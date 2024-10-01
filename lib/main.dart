@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:project/models/transactions.dart';
+import 'package:project/provider/remove_action.dart';
 import 'package:project/provider/transaction_provider.dart';
+import 'package:project/screens/datail_screen.dart';
+import 'package:project/screens/from_screen.dart';
 import 'package:project/screens/home_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:project/screens/edit_dialog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +46,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<TransactionProvider>(context, listen: false).initData();
+  }
   @override
   Widget build(BuildContext context){
     return HomeScreen();
