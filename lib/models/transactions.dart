@@ -6,6 +6,7 @@ class Transactions {
   String theme;
   double score;
   DateTime date;
+  String review;
 
   Transactions({
     this.id, 
@@ -15,5 +16,6 @@ class Transactions {
     required this.theme,
     required this.score,
     required this.date,
+    required this.review,
   });
 }

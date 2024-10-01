@@ -29,7 +29,8 @@ class TransactionDB{
       "genres": statement.genres,
       "theme": statement.theme,
       "score": statement.score,
-      "date": statement.date.toIso8601String()
+      "date": statement.date.toIso8601String(),
+      "review": statement.review,
     });
     db.close();
     return keyID;
@@ -48,6 +49,7 @@ class TransactionDB{
         theme: record['theme'].toString(),
         score: double.parse(record['score'].toString()),
         date: DateTime.parse(record['date'].toString()),
+        review: record['review'].toString(),
       ));
     }
     return transactions;
@@ -65,6 +67,7 @@ class TransactionDB{
       'theme': transaction.theme,
       'score': transaction.score,
       'date': transaction.date.toIso8601String(),
+      'review': transaction.review,
     }, finder: finder);
 
     db.close();

@@ -7,6 +7,7 @@ void showEditDialog(BuildContext context, Transactions transaction, Function(Tra
   final genresController = TextEditingController(text: transaction.genres);
   final themeController = TextEditingController(text: transaction.theme);
   final scoreController = TextEditingController(text: transaction.score.toString());
+  final reviewController = TextEditingController(text: transaction.review); 
 
   showDialog(
     context: context,
@@ -37,6 +38,10 @@ void showEditDialog(BuildContext context, Transactions transaction, Function(Tra
               decoration: const InputDecoration(labelText: 'Score'),
               keyboardType: TextInputType.number,
             ),
+            TextField(
+              controller: reviewController,
+              decoration: const InputDecoration(labelText: 'your review'),
+            ),
           ],
         ),
         actions: [
@@ -56,6 +61,7 @@ void showEditDialog(BuildContext context, Transactions transaction, Function(Tra
                 theme: themeController.text,
                 score: double.tryParse(scoreController.text) ?? transaction.score,
                 date: transaction.date,
+                review: reviewController.text,
               );
 
               onUpdate(updatedTransaction);

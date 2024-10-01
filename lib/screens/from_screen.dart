@@ -13,6 +13,7 @@ class FormScreen extends StatelessWidget {
   final genresController = TextEditingController();
   final themeController = TextEditingController();
   final scoreController = TextEditingController();
+  final reviewController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -97,6 +98,19 @@ class FormScreen extends StatelessWidget {
                 return null;
               },
             ),
+            TextFormField(
+              decoration: const InputDecoration(
+                labelText: 'your review',
+              ),
+              autofocus: true,
+              controller: reviewController,
+              validator: (String? str) {
+                if (str!.isEmpty) {
+                  return 'กรุณากรอกข้อมูล';
+                }
+                return null;
+              },
+            ),
             TextButton(
               child: const Text('บันทึก'),
               onPressed: () {
@@ -109,6 +123,7 @@ class FormScreen extends StatelessWidget {
                     theme: themeController.text,
                     score: double.parse(scoreController.text),
                     date: DateTime.now(),
+                    review: reviewController.text,
                   );
 
                   // Add transaction data object to provider

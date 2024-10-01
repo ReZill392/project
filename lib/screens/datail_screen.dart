@@ -28,6 +28,8 @@ class TransactionDetailPage extends StatelessWidget {
             Text('Score: ${transaction.score}', style: TextStyle(fontSize: 18)),
             SizedBox(height: 10),
             Text('Date: ${transaction.date.toLocal().toString().split(' ')[0]}', style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Text('Your review: ${transaction.review}', style: TextStyle(fontSize: 18)),
           ],
         ),
       ),
