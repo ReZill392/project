@@ -26,15 +26,10 @@ class TransactionProvider with ChangeNotifier {
 
   void deleteTransaction(int index) async{
     var db = TransactionDB(dbName: 'transactions.db');
-  
-
     var transactionToDelete = transactions[index];
-
- 
     if (transactionToDelete.keyID != null) {
       await db.deleteDatabase(transactionToDelete.keyID!);
     }
-
     transactions.removeAt(index);
     notifyListeners();
   }
