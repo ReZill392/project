@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:project/models/transactions.dart';
 import 'package:project/provider/transaction_provider.dart';
@@ -6,7 +7,7 @@ import 'package:project/screens/datail_screen.dart';
 import 'package:project/screens/from_screen.dart';
 import 'package:provider/provider.dart';
 import 'settings_screen.dart';
-import 'package:project/screens/edit_dialog.dart';
+import 'package:project/screens/edit_screen.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -25,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen>{
   
   final List<Widget> _pages = [
     TransactionListPage(), 
-    AllAnime(),            
+    FormScreen(),            
     SettingsScreen(toggleTheme: (bool ) {  },), 
   ];
 
@@ -42,16 +43,15 @@ class _HomeScreenState extends State<HomeScreen>{
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text('Anime'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return FormScreen();
-              }));
-            },
-          ),
-        ],
-      ),
+            IconButton(
+              icon: const Icon(Icons.exit_to_app),
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+            ),
+          ],
+        ),
+    
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
@@ -60,8 +60,8 @@ class _HomeScreenState extends State<HomeScreen>{
             label: 'Your Library',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'All Anime',
+            icon: Icon(Icons.add),
+            label: 'Add Library',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -136,15 +136,6 @@ class TransactionListPage extends StatelessWidget {
           },
         );
       },
-    );
-  }
-}
-
-class AllAnime extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-
     );
   }
 }

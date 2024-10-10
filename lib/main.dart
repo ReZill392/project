@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:project/models/transactions.dart';
-import 'package:project/provider/remove_action.dart';
 import 'package:project/provider/transaction_provider.dart';
-import 'package:project/screens/datail_screen.dart';
-import 'package:project/screens/from_screen.dart';
 import 'package:project/screens/home_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:project/screens/edit_dialog.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightBlue),
           useMaterial3: true,
         ),
         home: const MyHomePage(title: 'Anime 2024'),

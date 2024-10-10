@@ -18,16 +18,4 @@ class Transactions {
     required this.date,
     required this.review,
   });
-  Map<String, dynamic> toMap() {
-    return {
-      'id': keyID,
-      'title': title,
-      'type': type,
-      'genres': genres,
-      'theme': theme,
-      'score': score,
-      'date': date.toIso8601String(),
-      'review': review,
-    };
-  }
 }

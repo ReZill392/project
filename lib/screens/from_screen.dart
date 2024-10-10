@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/models/transactions.dart';
 import 'package:project/provider/transaction_provider.dart';
+import 'package:project/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
 class FormScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class FormScreen extends StatelessWidget {
               controller: titleController,
               validator: (String? str) {
                 if (str!.isEmpty) {
-                  return 'กรุณากรอกข้อมูล';
+                  return 'Please enter a title';
                 }
                 return null;
               },
@@ -46,7 +47,7 @@ class FormScreen extends StatelessWidget {
               controller: typeController,
               validator: (String? str) {
                 if (str!.isEmpty) {
-                  return 'กรุณากรอกข้อมูล';
+                  return 'Please enter a type';
                 }
                 return null;
               },
@@ -59,7 +60,7 @@ class FormScreen extends StatelessWidget {
               controller: genresController,
               validator: (String? str) {
                 if (str!.isEmpty) {
-                  return 'กรุณากรอกข้อมูล';
+                  return 'Please enter a genre';
                 }
                 return null;
               },
@@ -72,7 +73,7 @@ class FormScreen extends StatelessWidget {
               controller: themeController,
               validator: (String? str) {
                 if (str!.isEmpty) {
-                  return 'กรุณากรอกข้อมูล';
+                  return 'Please enter a theme';
                 }
                 return null;
               },
@@ -87,13 +88,13 @@ class FormScreen extends StatelessWidget {
                 try {
                   double score = double.parse(input!);
                   if (score < 0) {
-                    return 'กรุณากรอกข้อมูลมากกว่า 0';
+                    return 'Please enter a valid score (0-10)';
                   }
                   if (score > 10) {
-                    return 'กรุณากรอกข้อมูลไม่เกิน 10';
+                    return 'Please enter a valid score (0-10)';
                   }
                 } catch (e) {
-                  return 'กรุณากรอกข้อมูลเป็นตัวเลข';
+                  return 'Please enter a numbers';
                 }
                 return null;
               },
@@ -106,7 +107,7 @@ class FormScreen extends StatelessWidget {
               controller: reviewController,
               validator: (String? str) {
                 if (str!.isEmpty) {
-                  return 'กรุณากรอกข้อมูล';
+                  return 'Please enter your review';
                 }
                 return null;
               },
@@ -129,7 +130,12 @@ class FormScreen extends StatelessWidget {
                   var provider = Provider.of<TransactionProvider>(context, listen: false);
                   provider.addTransaction(statement);
 
-                  Navigator.pop(context);
+                   Navigator.push(context, MaterialPageRoute(
+                    fullscreenDialog: true,
+                      builder: (context){
+                        return HomeScreen();
+                    }
+                  ));
                 }
               },
             ),

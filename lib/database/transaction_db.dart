@@ -39,7 +39,7 @@ class TransactionDB{
   Future<List<Transactions>> loadAllData()async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store('expense');
-    var snapshot = await store.find(db);
+    var snapshot = await store.find(db, finder: Finder(sortOrders: [SortOrder(Field.key, false)]));
     List<Transactions> transactions = [];
     for (var record in snapshot) {
       transactions.add(Transactions(
@@ -56,12 +56,19 @@ class TransactionDB{
     return transactions;
   }
 
-  Future<void> updatedTransaction(Transactions transaction) async {
+  Future<void> updatedTransaction(Transactions statement) async {
     var db = await openDatabase();
     var store = intMapStoreFactory.store('expense');
-    final finder = Finder(filter: Filter.byKey(transaction));
-    await store.update(db, transaction.toMap(), finder: finder);
-
+    var filter = Finder(filter: Filter.equals(Field.key, statement.keyID));
+    var result = store.update(db, finder: filter,  {
+      "title": statement.title,
+      "type": statement.type,
+      "genres": statement.genres,
+      "theme": statement.theme,
+      "score": statement.score,
+      "date": statement.date.toIso8601String(),
+      "review": statement.review,
+    });
     db.close();
   }
 
