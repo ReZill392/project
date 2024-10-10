@@ -104,8 +104,8 @@ void showEditDialog(BuildContext context, Transactions transaction, Function(Tra
                   type: typeController.text,
                   genres: genresController.text,
                   theme: themeController.text,
-                  score: double.tryParse(scoreController.text) ?? transaction.score,
-                  date: transaction.date,
+                  score: double.parse(scoreController.text),
+                  date: DateTime.now(),
                   review: reviewController.text,
                 );
 
