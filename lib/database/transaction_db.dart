@@ -75,9 +75,7 @@ class TransactionDB{
   Future<void> deleteDatabase(int id) async {
     var db = await this.openDatabase();
     var store = intMapStoreFactory.store('expense');
-
     await store.record(id).delete(db);
-  
     await db.close();
   }
 }
